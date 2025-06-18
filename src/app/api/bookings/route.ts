@@ -10,19 +10,19 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ message: 'Invalid JSON body' }, { status: 400 });
+    return NextResponse.json({ message: 'Invalid JSON body',success:false }, { status: 400 });
   }
 
   const { vehicleId, fromPincode, toPincode, startTime, customerId } = body;
 
   if (!vehicleId || !fromPincode || !toPincode || !startTime || !customerId) {
-    return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+    return NextResponse.json({ message: 'Missing required fields',success:false }, { status: 400 });
   }
 
   // Check if vehicle exists
   const vehicle = await Vehicle.findById(vehicleId);
   if (!vehicle) {
-    return NextResponse.json({ message: 'Vehicle not found' }, { status: 404 });
+    return NextResponse.json({ message: 'Vehicle not found',success:false }, { status: 404 });
   }
 
   const parsedStartTime = new Date(startTime);
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (conflict) {
-    return NextResponse.json({ message: 'Vehicle already booked in this time slot' }, { status: 409 });
+    return NextResponse.json({ message: 'Vehicle already booked in this time slot', success:false }, { status: 409 });
   }
 
   try {
@@ -53,9 +53,9 @@ export async function POST(req: NextRequest) {
       userId: customerId,
     });
 
-    return NextResponse.json(booking, { status: 201 });
+    return NextResponse.json({booking , success:true}, { status: 201 });
   } catch (err) {
-    return NextResponse.json({ message: 'Server error', error: (err as Error).message }, { status: 500 });
+    return NextResponse.json({ message: 'Server error',success:false, error: (err as Error).message }, { status: 500 });
   }
 }
 

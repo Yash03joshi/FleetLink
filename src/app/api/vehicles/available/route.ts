@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   const startTimeRaw = searchParams.get('startTime');
 
   if (!capacityRequired || !fromPincode || !toPincode || !startTimeRaw) {
-    return NextResponse.json({ message: 'Missing query parameters' }, { status: 400 });
+    return NextResponse.json({ message: 'Missing query parameters',succcess:false }, { status: 400 });
   }
 
   const startTime = new Date(startTimeRaw);
@@ -41,11 +41,12 @@ export async function GET(req: NextRequest) {
     );
 
     return NextResponse.json({
+      success:true,
       estimatedRideDurationHours,
       availableVehicles,
     }, { status: 200 });
 
   } catch (err) {
-    return NextResponse.json({ message: 'Server error', error: (err as Error).message }, { status: 500 });
+    return NextResponse.json({ message: 'Server error',success:false, error: (err as Error).message }, { status: 500 });
   }
 }
