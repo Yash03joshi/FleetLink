@@ -65,7 +65,7 @@ export function calculateEstimatedRideDurationHours(fromPincode: string, toPinco
   const to = parseInt(toPincode);
 
 //   if (isNaN(from) || isNaN(to)) return 0;
-    console.log(fromPincode,toPincode);
+    // console.log(fromPincode,toPincode);
     
   return Math.abs(to - from) % 24;
 }

@@ -24,11 +24,15 @@ export async function GET(req: NextRequest) {
   const endTime = new Date(startTime);
   endTime.setHours(endTime.getHours() + estimatedRideDurationHours);
 
+  const searchData={
+    fromPincode,
+    toPincode,
+    startTime
+  }
+
   try {
-    // Step 1: Fetch all vehicles that meet capacity requirement
     const vehicles = await Vehicle.find({ capacityKg: { $gte: capacityRequired } });
 
-    // Step 2: Find all bookings that overlap with requested time
     const bookedVehicleIds = await Booking.find({
       startTime: { $lt: endTime },
       bookingEndTime: { $gt: startTime },
@@ -39,9 +43,11 @@ export async function GET(req: NextRequest) {
     const availableVehicles = vehicles.filter(
       (v) => !bookedVehicleIdsStr.includes(v._id.toString())
     );
-
+    // console.log(searchData);
+    
     return NextResponse.json({
       success:true,
+      searchData,
       estimatedRideDurationHours,
       availableVehicles,
     }, { status: 200 });

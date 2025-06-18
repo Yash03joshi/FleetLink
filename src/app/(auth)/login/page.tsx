@@ -13,6 +13,7 @@ function Page() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (password.length < 8) {
     toast.error('Password must be at least 8 characters long');
     return;
@@ -75,7 +76,7 @@ function Page() {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            className="w-full cursor-pointer bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
           >
             Login
           </button>
