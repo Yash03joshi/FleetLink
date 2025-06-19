@@ -22,6 +22,7 @@ type Booking = {
 
 function Page() {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [noBooking,setNoBooking] = useState(false);
   useAuthRedirect();
 
   useEffect(() => {
@@ -36,8 +37,11 @@ function Page() {
         const data = await res.json();
         if (data.success) {
           setBookings(data.bookings);
-          console.log(data.booking);
+          // console.log(data.booking);
           
+        }
+        if (data.bookings.length === 0) {
+          setNoBooking(true);
         }
       } catch (err) {
         console.error('Failed to fetch bookings', err);
@@ -64,6 +68,9 @@ function Page() {
             startTime={new Date(booking.startTime).toLocaleString()}
           />
         ))}
+        {noBooking && (
+            <p className="text-4xl mt-[35vh] w-full font-bold text-gray-800 text-center">There are no bookings.</p>
+        )}
       </div>
     </div>
   );
