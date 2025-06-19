@@ -78,7 +78,7 @@ function DeleteBookingPopup({ image, name, capacityKg, tyres, BookingId , fromPi
               ×
             </button>
             <div className="mx-auto py-10 px-5 bg-white">
-              <h2 className='text-2xl font-semibold mb-4'>Are you sure you want to book this vehicle?</h2>
+              <h2 className='text-2xl font-semibold mb-4'>Are you sure you want to cancel this booking?</h2>
               <div className='flex flex-col mb-2'>
                 <p><strong>Capacity:</strong> {capacityKg} Kg</p>
                 <p><strong>Tyres:</strong> {tyres}</p>
