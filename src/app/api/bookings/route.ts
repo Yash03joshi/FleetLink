@@ -2,6 +2,7 @@ import { connectDB } from '@/lib/db';
 import Vehicle from '@/Models/Vehicle';
 import Booking from '@/Models/Booking';
 import { NextRequest, NextResponse } from 'next/server';
+import { calculateEstimatedRideDurationHours } from '@/utils/calculateEstimatedRideDurationHours';
 
 export async function POST(req: NextRequest) {
   await connectDB();
@@ -60,12 +61,4 @@ export async function POST(req: NextRequest) {
 }
 
 
-export function calculateEstimatedRideDurationHours(fromPincode: string, toPincode: string): number {
-  const from = parseInt(fromPincode);
-  const to = parseInt(toPincode);
 
-//   if (isNaN(from) || isNaN(to)) return 0;
-    // console.log(fromPincode,toPincode);
-    
-  return Math.abs(to - from) % 24;
-}
